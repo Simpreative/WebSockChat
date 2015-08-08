@@ -13,6 +13,8 @@ var server = ws.createServer(function (connection) {
 				broadcast("PONG");
 				return;
 			}
+			
+			str = htmlspecialchars(str,"ENT_QUOTES");
 
 			if (connection.nickname === null) {
 				connection.nickname = str;

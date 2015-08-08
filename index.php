@@ -43,7 +43,7 @@ function microtime(get_as_float) {
 	}
 
 	function addOutput(x){
-		$("#output")[0].innerHTML += getTime() + htmlspecialchars(x,"ENT_QUOTES") + "<br />\n";
+		$("#output")[0].innerHTML += getTime() + x + "<br />\n";
 		audio.play();
 		$('#output').stop().animate({
 			scrollTop: $("#output")[0].scrollHeight
