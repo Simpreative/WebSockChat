@@ -32,6 +32,8 @@ function microtime(get_as_float) {
 
 	function sendping(){
 	wSocket.send("PING");
+	clearTimeout(pingtimer);
+	pingtimer=setTimeout(sendping,5000);
 	}
 
 	function send(x){ 
