@@ -17,11 +17,14 @@
 	function addOutput(x){
 		$("#output")[0].innerHTML += htmlspecialchars(x,"ENT_QUOTES") + "\n";
 		audio.play();
+		$('#output').stop().animate({
+			scrollTop: $("#output")[0].scrollHeight
+		}, 800);
 	}
 
 	$(document).ready(function(){ 
 		$("#inputMessage").bind("keypress",function(event){ 
-			
+
 			if(event.keyCode == 13){
 				if($("#inputMessage").val() == "") {
 					return false;
@@ -29,7 +32,7 @@
 					send($("#inputMessage").val());
 				}
 			}
-			
+
 		});
 	});
 </script>
