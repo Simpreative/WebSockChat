@@ -12,7 +12,7 @@
     }
     log.buffer = [];
  
-    url = "ws://";
+    url = "ws://chat.pe1.me:8000";
     w = new WebSocket(url);
  
     w.onopen = function() {
