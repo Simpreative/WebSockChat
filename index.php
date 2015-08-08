@@ -66,7 +66,7 @@ html, body {
 </style>
 </head>
 <body>
-<div style="position: relative">
+<div style="position: relative; height: 100%;">
 	<div id="output" style="position: absolute; width: 100%; height: 100%; overflow: scroll; overflow-x: hidden;"></div>
 	<input type="text" id="inputMessage" style="position: absolute; width: 100%; bottom: 0;">
 </div>
