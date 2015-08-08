@@ -16,17 +16,14 @@ var server = ws.createServer(function (connection) {
 
 			if (connection.nickname === null) {
 				connection.nickname = str;
-				broadcast(str + " entered");
+				broadcast("<span style='color: #CE5C00;'>" + str + " 님이 입장하셨습니다</span>");
 			} else {
-
-
-					broadcast("[" + connection.nickname + "] " + str);
-				
+				broadcast("[" + connection.nickname + "] " + str);
 			}
 		}
 	)
 	connection.on("close", function () {
-		broadcast(connection.nickname + " left");
+		broadcast("<span style='color: #C4A000;'>" + connection.nickname + " 님이 퇴장하셨습니다</span>");
 	})
 }).listen(8000)
 
