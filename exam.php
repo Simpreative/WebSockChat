@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <title>WebSocket Test Page</title>
+<script src="http://zerglinggo.net/include/jquery-2.1.4.min.js"></script>
 <script>
  
     var log = function(s) {
@@ -29,7 +30,7 @@
         log("closed");
     }
  
-    window.onload = function(event) {
+    window.onload = function() {
         log(log.buffer.join("\n"));
  
         document.getElementById("sendButton").onclick = function() {
