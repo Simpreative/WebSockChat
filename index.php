@@ -3,6 +3,7 @@
 <head>
 <title>WebSocket Chatting</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=360px, user-scalable=no, initial-scale=1">
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js"></script>
 <script src="http://zerglinggo.net/include/bootstrap.php?t=js"></script>
 <link rel="stylesheet" href="http://zerglinggo.net/include/bootstrap.php?t=css">
