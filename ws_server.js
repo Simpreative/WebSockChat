@@ -10,7 +10,7 @@ var server = ws.createServer(function (connection) {
 				broadcast("[" + connection.nickname + "] " + str)
 			}
 		}
-	})
+	)
 	connection.on("close", function () {
 		broadcast(connection.nickname + " left")
 	})
