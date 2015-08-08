@@ -59,8 +59,9 @@ function microtime(get_as_float) {
 	});
 </script>
 <style>
-body {
-	height: calc(100%);
+html, body {
+	height: 100%;
+	overflow:hidden;
 }
 </style>
 </head>
