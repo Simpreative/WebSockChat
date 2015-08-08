@@ -16,7 +16,7 @@ $("#output")[0].innerHTML += htmlspecialchars(x,"ENT_QUOTES") + "\n";
 
 $(document.ready(function(){ 
 	$("#inputMessage").bind("keypress",function(event){ alert(event); });
-});
+}));
 </script>
  
 <input type="text" id="inputMessage">
