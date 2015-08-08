@@ -37,13 +37,13 @@
             w.send(document.getElementById("inputMessage").value);
         }
               // 간지나게 엔터키 누르면 메시지 날림
-        document.getElementById("inputMessage").onkeypress = function() {
+            $('#inputMessage').keydown(function(event) {
             if (event.keyCode == '13') {
                 value = document.getElementById("inputMessage").value
                 w.send(value);
                 document.getElementById("inputMessage").value = "";
             }
-        }
+        });
     }
 </script>
  
