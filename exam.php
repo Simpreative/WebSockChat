@@ -27,7 +27,7 @@ function microtime(get_as_float) {
 	function send(x){ 
 
 		if(x == "!핑"){
-			wSocket.send("핑 요청 - " + microtime(true));
+			wSocket.send("핑 요청 - " + microtime(true) + "\n");
 		}
 
 		wSocket.send(x); 
