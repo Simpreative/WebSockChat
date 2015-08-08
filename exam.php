@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <title>WebSocket Test Page</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js"></script>
 <script type="text/javascript" src="http://pe1.me/data/public/common/function.js"></script>
 <script type="text/javascript">
@@ -23,6 +23,7 @@ $(document).ready(function(){
 	$("#inputMessage").bind("keypress",function(event){ 
 	
 		if(event.keyCode == 13){
+            if($("#inputMessage").val() == "") return false;
 			send($("#inputMessage").val());
 		}
 	
