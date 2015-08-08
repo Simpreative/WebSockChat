@@ -8,7 +8,7 @@ function onConnect(connection) {
 	connection.on("close", onClose)
 }
 
-function onText(str) {
+function onText(connection, str) {
 	if (connection.nickname === null) {
 		connection.nickname = str
 		broadcast(str+" entered")
@@ -17,7 +17,7 @@ function onText(str) {
 	}
 }
 
-function onClose() {
+function onClose(connection) {
 	broadcast(connection.nickname + " left")
 }
 
