@@ -3,13 +3,13 @@ var microtime = require("microtime");
 var util = require("util");
 var server = ws.createServer(function (connection) {
 	connection.nickname = null;
-	connection.timerout = setTimeout(function(){ connection.timeout(); },10000);
+	connection.timerout = setTimeout(connection.timeout,10000);
 	connection.timeout = function(){ connection.close(1011,"PING TIMEOUT"); }
 	connection.on("text", function (str) {
 
 			if(str == "PING"){
 				clearTimeout(connection.timerout);
-				connection.timerout = setTimeout(function(){ connection.timeout(); },10000);
+				connection.timerout = setTimeout(connection.timeout,10000);
 				broadcast("PONG");
 				return;
 			}
