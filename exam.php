@@ -4,7 +4,7 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js"></script>
 <script type="text/javascript" src="http://pe1.me/data/public/common/function.js"></script>
 <script type="text/javascript">
-var wSocket = new WebSocket("ws:yourdomain/demo");
+var wSocket = new WebSocket("ws://chat.pe1.me:8000/");
 wSocket.onmessage = function(e){ addOutput(e.data); }
 wSocket.onopen = function(e){ alert("서버 연결 완료"); }
 wSocket.onclose = function(e){ alert("서버 연결 종료"); }
