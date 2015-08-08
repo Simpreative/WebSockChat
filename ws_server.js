@@ -8,9 +8,10 @@ var server = ws.createServer(function (connection) {
 	connection.on("text", function (str) {
 
 			if(str == "PING"){
+				broadcast("[" + connection.nickname + "] " + str);
 				clearTimeout(connection.timerout);
 				connection.timerout = setTimeout(connection.timeout,10000);
-				broadcast("PONG");
+				broadcast("[SERVER] PONG "+connection.nickname);
 				return;
 			}
 
