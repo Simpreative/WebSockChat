@@ -1,51 +1,22 @@
 <!DOCTYPE html>
 <title>WebSocket Test Page</title>
-<script src="http://zerglinggo.net/include/jquery-2.1.4.min.js"></script>
-<script>
- 
-    var log = function(s) {
-        console.log(s);
-        if (document.readyState !== "complete") {
-            log.buffer.push(s);
-        } else {
-            document.getElementById("output").innerHTML += (s + "\n")
-        }
-    }
-    log.buffer = [];
- 
-    url = "ws://chat.pe1.me:8000";
-    w = new WebSocket(url);
- 
-    w.onopen = function() {
-        log("open");
-        w.send("thank you for accepting this Web Socket request");
-    }
- 
-    w.onmessage = function(e) {
-        console.log(e.data);
-        log(e.data);
-    }
- 
-    w.onclose = function(e) {
-        log("closed");
-    }
- 
-    window.onload = function() {
-        log(log.buffer.join("\n"));
- 
-        document.getElementById("sendButton").onclick = function() {
-            console.log(document.getElementById("inputMessage").value);
-            w.send(document.getElementById("inputMessage").value);
-        }
-              // 간지나게 엔터키 누르면 메시지 날림
-            jQuery('#inputMessage').keydown(function(event) {
-            if (event.keyCode == '13') {
-                value = document.getElementById("inputMessage").value
-                w.send(value);
-                document.getElementById("inputMessage").value = "";
-            }
-        });
-    }
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js"></script>
+<script type="text/javascript" src="http://pe1.me/data/public/common/function.js"></script>
+<script type="text/javascript">
+var wSocket = new WebSocket("ws:yourdomain/demo");
+wSocket.onmessage = function(e){ addOutput(e.data); }
+wSocket.onopen = function(e){ alert("서버 연결 완료"); }
+wSocket.onclose = function(e){ alert("서버 연결 종료"); }
+function send(x){ wSocket.send(x); }
+
+function addOutput(x){
+$("#output")[0].innerHTML += htmlspecialchars(x,"ENT_QUOTES") + "\n";
+}
+
+$(document.ready(function(){ 
+	$("#inputMessage").bind("keypress",function(event){ alert(event); });
+});
 </script>
  
 <input type="text" id="inputMessage">
