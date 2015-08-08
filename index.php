@@ -24,15 +24,17 @@ function microtime(get_as_float) {
 <script type="text/javascript">
 	var wSocket = new WebSocket("ws://chat.pe1.me:8000/");
 	var audio = new Audio('alert.wav');
+	var status = false;
+	var pingtimer = null;
 	wSocket.onmessage = function(e){ addOutput(e.data); }
-	wSocket.onopen = function(e){ addOutput("서버 연결 완료"); }
-	wSocket.onclose = function(e){ addOutput("서버 연결 종료"); }
-	function send(x){ 
-		if(x == "!핑"){
-			wSocket.send("핑 요청 - " + microtime(true) + "\n");
-			return;
-		}
+	wSocket.onopen = function(e){ addOutput("서버 연결 완료"); status=true; pingtimer=setTimeout(sendping,5000); }
+	wSocket.onclose = function(e){ addOutput("서버 연결 종료"); status=false; clearTimeout(pingtimer); }
 
+	function sendping(){
+	wSocket.send("PING");
+	}
+
+	function send(x){ 
 		wSocket.send(x); 
 		$("#inputMessage").val(""); 
 	}
