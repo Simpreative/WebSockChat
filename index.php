@@ -61,12 +61,14 @@ function microtime(get_as_float) {
 <style>
 html, body {
 	height: 100%;
-	overflow:hidden;
+	overflow: hidden;
 }
 </style>
 </head>
 <body>
-	<div id="output" style="width: 100%; height: 90%; overflow: scroll; overflow-x: hidden;"></div>
-	<input type="text" id="inputMessage" style="width: 100%; bottom: 0;">
+<div style="position: relative">
+	<div id="output" style="position: absolute; width: 100%; height: 100%; overflow: scroll; overflow-x: hidden;"></div>
+	<input type="text" id="inputMessage" style="position: absolute; width: 100%; bottom: 0;">
+</div>
 </body>
 </html>
