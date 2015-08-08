@@ -8,14 +8,23 @@ var wSocket = new WebSocket("ws://chat.pe1.me:8000/");
 wSocket.onmessage = function(e){ addOutput(e.data); }
 wSocket.onopen = function(e){ alert("서버 연결 완료"); }
 wSocket.onclose = function(e){ alert("서버 연결 종료"); }
-function send(x){ wSocket.send(x); }
+function send(x){ 
+	wSocket.send(x); 
+	$("#inputMessage").val(""); 
+}
 
 function addOutput(x){
 $("#output")[0].innerHTML += htmlspecialchars(x,"ENT_QUOTES") + "\n";
 }
 
 $(document).ready(function(){ 
-	$("#inputMessage").bind("keypress",function(event){ console.log(event); });
+	$("#inputMessage").bind("keypress",function(event){ 
+	
+		if(event.keyCode == 13){
+			send($("#inputMessage").val());
+		}
+	
+	});
 });
 </script>
  
