@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <title>WebSocket Test Page</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js"></script>
 <script type="text/javascript" src="http://pe1.me/data/public/common/function.js"></script>
 <script type="text/javascript">
