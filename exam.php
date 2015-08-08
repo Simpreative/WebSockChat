@@ -15,7 +15,7 @@
 	}
 
 	function addOutput(x){
-		$("#output")[0].innerHTML += htmlspecialchars(x,"ENT_QUOTES") + "\n";
+		$("#output")[0].innerHTML += htmlspecialchars(x,"ENT_QUOTES") + "<br />\n";
 		audio.play();
 		$('#output').stop().animate({
 			scrollTop: $("#output")[0].scrollHeight
@@ -39,4 +39,4 @@
 
 <input type="text" id="inputMessage">
 <button id="sendButton">Send</button>
-<pre id="output" style="height: 800px;"></pre>
+<div id="output" style="height: 800px;"></div>
