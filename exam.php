@@ -6,8 +6,8 @@
 <script type="text/javascript">
 var wSocket = new WebSocket("ws://chat.pe1.me:8000/");
 wSocket.onmessage = function(e){ addOutput(e.data); }
-wSocket.onopen = function(e){ alert("서버 연결 완료"); }
-wSocket.onclose = function(e){ alert("서버 연결 종료"); }
+wSocket.onopen = function(e){ addOutput("서버 연결 완료"); }
+wSocket.onclose = function(e){ addOutput("서버 연결 종료"); }
 function send(x){ 
 	wSocket.send(x); 
 	$("#inputMessage").val(""); 
@@ -15,6 +15,8 @@ function send(x){
 
 function addOutput(x){
 $("#output")[0].innerHTML += htmlspecialchars(x,"ENT_QUOTES") + "\n";
+var audio = new Audio('alert.wav');
+audio.play();
 }
 
 $(document).ready(function(){ 
