@@ -11,14 +11,8 @@ var server = ws.createServer(function (connection) {
 
 				var or = /^핑\s요청\s\-\s(.*)/;
 				var os = str.match(or);
-				console.log(util.inspect(os));
 				if(os){
-					console.log("is match");
-					if(typeof os[0] == "number"){
 						broadcast("[" + connection.nickname + "] 응답 : 0." + (microtime.nowDouble() - os[0]) + "초");
-					} else {
-						console.log("??");
-					}
 				} else {
 					broadcast("[" + connection.nickname + "] " + str);
 				}
