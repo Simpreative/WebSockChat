@@ -39,4 +39,4 @@
 
 <input type="text" id="inputMessage">
 <button id="sendButton">Send</button>
-<pre id="output"></pre>
+<pre id="output" style="height: 800px;"></pre>
