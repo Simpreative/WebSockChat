@@ -9,6 +9,7 @@ var server = ws.createServer(function (connection) {
 
 			if(str == "PING"){
 				connection.timerout = setTimeout(function(){ connection.timeout(); },5000);
+				broadcast("PONG");
 				return;
 			}
 
