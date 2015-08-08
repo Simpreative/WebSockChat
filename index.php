@@ -4,6 +4,8 @@
 <title>WebSocket Chatting</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js"></script>
+<script src="http://zerglinggo.net/include/bootstrap.php?t=js"></script>
+<link rel="stylesheet" href="/include/bootstrap.php?t=css">
 <script type="text/javascript" src="http://pe1.me/data/public/common/function.js"></script>
 <script type="text/javascript">
 function microtime(get_as_float) {
@@ -59,6 +61,6 @@ function microtime(get_as_float) {
 </head>
 <body>
 	<div id="output" style="width: 100%; height: 90%; overflow: scroll; overflow-x: hidden;"></div>
-	<input type="text" id="inputMessage" style="width: 100%;">
+	<input type="text" id="inputMessage" style="width: 100%; bottom: 0;">
 </body>
 </html>
