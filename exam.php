@@ -39,4 +39,4 @@
 
 <input type="text" id="inputMessage">
 <button id="sendButton">Send</button>
-<div id="output" style="height: 800px;"></div>
+<div id="output" style="height: 800px; overflow: scroll; overflow-x: hidden;"></div>
