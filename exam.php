@@ -29,7 +29,7 @@
         log("closed");
     }
  
-    window.onload = function() {
+    window.onload = function(event) {
         log(log.buffer.join("\n"));
  
         document.getElementById("sendButton").onclick = function() {
