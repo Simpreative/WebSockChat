@@ -1,18 +1,21 @@
 var ws = require("nodejs-websocket")
- 
-function broadcast(server, msg) {
-    server.connections.forEach(function (conn) {
-        conn.sendText(msg)
-    })
-}
 
-var server = ws.createServer(function (conn) {
-    console.log("New connection")
-    conn.on("text", function (str) {
-        console.log("Received " + str)
-        broadcast(str)
-    })
-    conn.on("close", function (code, reason) {
-        console.log("Connection closed")
-    })
+var server = ws.createServer(function (connection) {
+        connection.nickname = null
+        connection.on("text", function (str) {
+                if (connection.nickname === null) {
+                        connection.nickname = str
+                        broadcast(str+" entered")
+                } else
+                        broadcast("["+connection.nickname+"] "+str)
+        })
+        connection.on("close", function () {
+                broadcast(connection.nickname+" left")
+        })
 }).listen(8000)
+
+function broadcast(str) {
+        server.connections.forEach(function (connection) {
+                connection.sendText(str)
+        })
+}
