@@ -4,7 +4,7 @@ var util = require("util");
 var server = ws.createServer(function (connection) {
 	connection.nickname = null;
 	connection.timerout = setTimeout(connection.timeout,10000);
-	connection.timeout = function(){ connection.close(1011,"PING TIMEOUT"); }
+	connection.timeout = function(){ broadcast(connection.nickname + " ping time out"); connection.close(1011,"PING TIMEOUT"); }
 	connection.on("text", function (str) {
 
 			if(str == "PING"){
