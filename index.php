@@ -42,7 +42,7 @@ function microtime(get_as_float) {
 	}
 
 	function addOutput(x){
-		$("#output")[0].innerHTML += htmlspecialchars(x,"ENT_QUOTES") + "<br />\n";
+		$("#output")[0].innerHTML += getTime() + htmlspecialchars(x,"ENT_QUOTES") + "<br />\n";
 		audio.play();
 		$('#output').stop().animate({
 			scrollTop: $("#output")[0].scrollHeight
@@ -61,6 +61,22 @@ function microtime(get_as_float) {
 
 		});
 	});
+</script>
+<script>
+function getTime() {
+    var today=new Date();
+    var h=today.getHours();
+    var m=today.getMinutes();
+    var s=today.getSeconds();
+    m = checkTime(m);
+    s = checkTime(s);
+    return "["+h+":"+m+":"+s+"]";
+}
+
+function checkTime(i) {
+    if (i<10) {i = "0" + i};  // add zero in front of numbers < 10
+    return i;
+}
 </script>
 <style>
 html, body {
