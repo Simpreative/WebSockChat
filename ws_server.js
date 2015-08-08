@@ -13,6 +13,7 @@ var server = ws.createServer(function (connection) {
 				var os = str.match(or);
 				console.log(util.inspect(os));
 				if(os){
+					console.log("is match");
 					if(typeof os[0] == "number"){
 						broadcast("[" + connection.nickname + "] 응답 : 0." + (microtime.nowDouble() - os[0]) + "초");
 					} else {
