@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>WebSocket Chatting</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="viewport" content="width=360px, user-scalable=no, initial-scale=1">
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js"></script>
-<script src="http://zerglinggo.net/include/bootstrap.php?t=js"></script>
-<link rel="stylesheet" href="http://zerglinggo.net/include/bootstrap.php?t=css">
-<script type="text/javascript" src="http://pe1.me/data/public/common/function.js"></script>
-<script type="text/javascript">
-function microtime(get_as_float) {
+	<title>WebSocket Chatting</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=360px, user-scalable=no, initial-scale=1">
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js"></script>
+	<script src="http://zerglinggo.net/include/bootstrap.php?t=js"></script>
+	<link rel="stylesheet" href="http://zerglinggo.net/include/bootstrap.php?t=css">
+	<script type="text/javascript" src="http://pe1.me/data/public/common/function.js"></script>
+	<script type="text/javascript">
+		function microtime(get_as_float) {
 	//  discuss at: http://phpjs.org/functions/microtime/
 	// original by: Paulo Freitas
 	//   example 1: timeStamp = microtime(true);
@@ -23,47 +23,61 @@ function microtime(get_as_float) {
 }
 </script>
 <script type="text/javascript">
-var myNick;
-var wSocket,status,pingtimer,temp1;
-var audio = new Audio('alert/Argon.ogg');
-function openChat(addr,port){
-wSocket = new WebSocket("ws://"+addr+":"+port+"/");
-wSocket.onmessage = function(e){ 
+	var myNick;
+	var wSocket,status,pingtimer,temp1;
+	var audio = new Audio('alert/Argon.ogg');
 
-		regPacket = /([A-Z]{4})\s?(.*)/g;
-		regMatch = regPacket.exec(e.data.trim());
-		if(regMatch === null) {
-			addOutput("<span style='color:#FF0000;'>[경고]</span> 서버가 알수없는 패킷을 보냈습니다. \""+e.data+"\"");
-			return;
+	function openChat(addr, port) {
+		openChat(addr + ":" + port);
+	}
+
+	function openChat(address) {
+		wSocket = new WebSocket("ws://" + address);
+		wSocket.onmessage = function(e){ 
+
+			regPacket = /([A-Z]{4})\s?(.*)/g;
+			regMatch = regPacket.exec(e.data.trim());
+			if(regMatch === null) {
+				addOutput("<span style='color:#FF0000;'>[경고]</span> 서버가 알 수 없는 패킷을 보냈습니다. \""+e.data+"\"");
+				return;
+			}
+			Protocol = regMatch[1];
+
+			if(Protocol == "PONG"){
+				$("#output")[0].innerHTML += "핑 : "+(Math.round((microtime(true) - temp1)*1000))+"ms"+"<br />\n";
+				return;
+			} else if(Protocol == "HELO") {
+				HandShakeEnd();
+			}
+
+			regText = regMatch[2];
+
+			if(Protocol == "CHAT"){
+				addOutput(regText);
+			} else if(Protocol == "ERRO") {
+				if(!status) {
+					$("#alert").html("<div class='alert alert-danger' role='alert'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span><span class='sr-only'>오류:</span> 존재하는 닉네임 입니다.</div>");
+					$("#nickname").attr("disabled", false);
+					$("#btn-connect").attr("disabled", false);
+					wSocket.close();
+				}
+			} else {
+				addOutput("<span style='color:#FF0000;'>[경고]</span> 서버가 알 수 없는 패킷을 보냈습니다. \""+e.data+"\"");
+			}
 		}
-		Protocol = regMatch[1];
-
-	if(Protocol == "PONG"){
-		$("#output")[0].innerHTML += "핑 : "+(Math.round((microtime(true) - temp1)*1000))+"ms"+"<br />\n";
-		return;
+		wSocket.onopen = function(e){ addOutput("서버 연결 완료"); pingtimer=setTimeout(sendping,5000); HandShakeWait(); }
+		wSocket.onclose = function(e){ addOutput("연결이 종료 되었습니다. "+e.reason); status=false; clearTimeout(pingtimer); HandShakeClose(); }
+		wSocket.onerror = function(e){ addOutput("Error"); status=false; }
 	}
-	
-	regText = regMatch[2];
-
-	if(Protocol == "CHAT"){
-		addOutput(regText);
-	} else {
-		addOutput("<span style='color:#FF0000;'>[경고]</span> 서버가 알수없는 패킷을 보냈습니다. \""+e.data+"\"");
-	}
-}
-wSocket.onopen = function(e){ addOutput("서버 연결 완료"); pingtimer=setTimeout(sendping,5000); HandShakeWait(); }
-wSocket.onclose = function(e){ addOutput("연결이 종료 되었습니다. "+e.reason); status=false; clearTimeout(pingtimer); HandShakeClose(); }
-wSocket.onerror = function(e){ addOutput("Error"); status=false; }
-}
 
 	audio.volume=0.5;
 
 	function sendping(){
 		if(!status) return;
-	temp1 = microtime(true);
-	wSocket.send("PING");
-	clearTimeout(pingtimer);
-	pingtimer=setTimeout(sendping,5000);
+		temp1 = microtime(true);
+		wSocket.send("PING");
+		clearTimeout(pingtimer);
+		pingtimer=setTimeout(sendping,5000);
 	}
 
 	function send(x){ 
@@ -77,12 +91,12 @@ wSocket.onerror = function(e){ addOutput("Error"); status=false; }
 			if(regText == "clear"){
 				$("#output")[0].innerHTML = "";
 			} else {
-				addOutput("알 수 없는 명령어");
+				addOutput("알 수 없는 명령어입니다.");
 			}
 			$("#inputMessage").val(""); 
 		} else {
-		wSocket.send("CHAT "+x); 
-		$("#inputMessage").val(""); 
+			wSocket.send("CHAT "+x); 
+			$("#inputMessage").val(""); 
 		}
 	}
 
@@ -97,34 +111,20 @@ wSocket.onerror = function(e){ addOutput("Error"); status=false; }
 
 	function HandShakeWait(){
 		status = false;
-		$("#handshakestatus")[0].innerHTML = "서버 연결완료!";
-		$("#handshakeform")[0].innerHTML = '닉네임 입력 : <input type="text" id="joinNICK" style="height: 5%; font-size: 4vh;" />';
-		$("#joinNICK").bind("keypress",function(event){ 
-			if(event.keyCode == 13){
-				if($("#joinNICK").val() == "") {
-					return false;
-				} else {
-					wSocket.send("NICK "+$("#joinNICK").val());
-					HandShakeEnd();
-				}
-			}
-
-		});
+		$("#alert").html("<div class='alert alert-success' role='alert'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span><span class='sr-only'>성공:</span> 서버에 연결되었습니다</div>");
+		wSocket.send("NICK " + $("#nickname").val());
 	}
 
 	function HandShakeEnd(){
 		status = true;
-		$("#square").css("display","none");
-		$("#joinNICK").unbind("keypress");
-		$("#handshakeform")[0].innerHTML = "";
-		$("#list").css("display","none");
+		$("#alert").html("");
+		$("#connmain").css("display", "none");
+		$("#chatmain").css("display", "");
 	}
 
 	function HandShakeClose(){
 		status = false;
-		$("#handshakestatus")[0].innerHTML = "서버와 연결이 끊어졌습니다.";
-		$("#joinNICK").unbind("keypress");
-		$("#handshakeform")[0].innerHTML = "";	
+		$("#alert").html("<div class='alert alert-danger' role='alert'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span><span class='sr-only'>오류:</span> 서버와 연결이 끊어졌습니다</div>");	
 	}
 
 	$(document).ready(function(){ 
@@ -140,97 +140,88 @@ wSocket.onerror = function(e){ addOutput("Error"); status=false; }
 		});
 	});
 
-function getTime() {
-    var today=new Date();
-    var h=today.getHours();
-    var m=today.getMinutes();
-    var s=today.getSeconds();
-    m = checkTime(m);
-    s = checkTime(s);
-    return "["+h+":"+m+":"+s+"]";
-}
+	function getTime() {
+		var today=new Date();
+		var h=today.getHours();
+		var m=today.getMinutes();
+		var s=today.getSeconds();
+		m = checkTime(m);
+		s = checkTime(s);
+		return "["+h+":"+m+":"+s+"]";
+	}
 
-function checkTime(i) {
+	function checkTime(i) {
     if (i<10) {i = "0" + i};  // add zero in front of numbers < 10
     return i;
 }
 </script>
 <style>
-html, body {
-	height: 100%;
-	overflow: hidden;
-}
-#list tr:hover {
-    background: #fff !important;
-	cursor:hand;
-}
-#list tr:hover td {
-    background: #c7d4dd !important;
-	cursor:hand;
-}
-
-#square {
-	display:none;
-    position: absolute;
-    top:0;
-    bottom:0;
-    left:0;
-    right:0;
-    margin:0 auto;
-    margin-top:50px;
-    width:80%;
-    height:70%;
-    background-color:#333;
-    z-index:10;
-	color:#FFFFFF;
-}
+	html, body {
+		height: 100%;
+		overflow: hidden;
+	}
 </style>
-<script type="text/javascript">
-function goChat(addr,port){
-$("#square").css("display","block");
-$("#handshakestatus")[0].innerHTML = "서버 연결중.";
-openChat(addr,port);
-}
+<script>
+	function goChat(addr,port) {
+		goChat(addr + ":" + port);
+	}
+
+	function goChat(address) {
+		$("#nickname").attr("disabled", true);
+		$("#btn-connect").attr("disabled", true);
+		$("#alert").html("<div class='alert alert-info' role='alert'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span><span class='sr-only'>정보:</span> 서버에 연결중입니다...</div>");
+		openChat(address);
+	}
+
+	$("#btn-connect").click(function() {
+		var selectedServer = $("#server option:selected").val();
+		goChat(selectedServer);
+	});
 </script>
 </head>
 <body>
-<div id="list" style="position: relative; height: 100%;">
-	<table style="position: absolute; width: 100%; height: 95%; overflow: scroll; overflow-x: hidden;">
-	<tr>
-	<th>서버 제목</th>
-	<th>관리자</th>
-	<th>암호</th>
-	<th>ADDRESS</th>
-	<th>PORT</th>
-	</tr>
+	<div id="connmain" style='padding-top: 90px;'>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 col-md-offset-3">
+					<div class="panel panel-login">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="form-group">
+										<div id="alert"></div>
+									</div>
+									<div class="form-group">
+										<select name="server">
+											<option value="chat.pe1.me:8000">Simpreative #1</option>
+											<option value="chat.pe1.me:8001">Simpreative #2</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<input type="text" name="nickname" id="nickname" tabindex="1" placeholder="닉네임" value="" required>
+									</div>
+									<div class="form-group">
+										<input type="password" name="password" id="password" tabindex="2" placeholder="서버 암호" disabled>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<div class="col-sm-6 col-sm-offset-3">
+												<input type="button" id="btn-connect" tabindex="3" class="btn btn-success" value="로그인">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-	<tr onclick="goChat(this.getElementsByTagName('td')[3].textContent,this.getElementsByTagName('td')[4].textContent);">
-	<td>Simpreative</td>
-	<td>Ketpaku</td>
-	<td>NO</td>
-	<td>chat.pe1.me</td>
-	<td>8000</td>
-	</tr>
-
-	<tr onclick="goChat(this.getElementsByTagName('td')[3].textContent,this.getElementsByTagName('td')[4].textContent);">
-	<td>Simpreative2</td>
-	<td>Ketpaku</td>
-	<td>NO</td>
-	<td>chat.pe1.me</td>
-	<td>8001</td>
-	</tr>
-
-	</table>
-</div>
-
-<div id="square">
-<div id="handshakestatus" style="font-size:6vh;"></div>
-<div id="handshakeform"></div>
-</div>
-
-<div style="position: relative; height: 100%;">
-	<div id="output" style="position: absolute; width: 100%; height: 95%; overflow: scroll; overflow-x: hidden;"></div>
-	<input type="text" id="inputMessage" style="position: absolute; width: 100%; height: 5%; bottom: 0; font-size: 3vh;">
-</div>
+	<div id="chatmain" style="position: relative; height: 100%; display: none;">
+		<div id="output" style="position: absolute; width: 100%; height: 95%; overflow: scroll; overflow-x: hidden;"></div>
+		<input type="text" id="inputMessage" style="position: absolute; width: 100%; height: 5%; bottom: 0; font-size: 3vh;">
+	</div>
 </body>
 </html>

@@ -35,6 +35,7 @@ var server = ws.createServer(function (connection) {
 			} else {
 				if (connection.nickname === null) {
 					connection.nickname = regText;
+					connection.sendText("HELO");
 					broadcast("CHAT <span style='color: #CE5C00;'>" + regText + " 님이 입장하셨습니다</span>");
 					return;
 				} else {
