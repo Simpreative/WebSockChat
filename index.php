@@ -69,7 +69,7 @@ wSocket.onerror = function(e){ addOutput("Error"); status=false; }
 	function send(x){ 
 		if(!status) return;
 		regPacket = /^\/(.*)/g;
-		regMatch = regPacket.exec(e.data.trim());	
+		regMatch = regPacket.exec(x.trim());	
 
 		if(regMatch !== null){
 			regText = regMatch[0];
