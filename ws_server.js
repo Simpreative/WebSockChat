@@ -30,6 +30,7 @@ var server = ws.createServer(function (connection) {
 					connection.sendText(connection.nickname);
 				}
 			});
+			return;
 		}
 
 		// TEXT Part
