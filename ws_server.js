@@ -27,7 +27,7 @@ var server = ws.createServer(function (connection) {
 		} else if(Protocol == "LIST") {
 			server.connections.forEach(function (connection) {
 				if(connection.nickname != null) {
-					connection.sendText(connection.nickname);
+					connection.sendText("CHAT <span style='color: #5C3566'>" + connection.nickname + "</span>");
 				}
 			});
 			return;
