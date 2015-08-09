@@ -14,7 +14,6 @@ var server = ws.createServer(function (connection) {
 		if(regMatch === null) {
 			connection.close(500, "Bad Request");
 		}
-		
 		Protocol = regMatch[1];
 
 		// No TEXT Part
@@ -34,7 +33,7 @@ var server = ws.createServer(function (connection) {
 			connection.nickname = regText;
 			broadcast("CHAT <span style='color: #CE5C00;'>" + regText + " 님이 입장하셨습니다</span>");
 		} else if (Protocol == "CHAT") {
-			broadcast("CHAT [" + connection.nickname + "] " + str);
+			broadcast("CHAT [" + connection.nickname + "] " + regText);
 		}
 
 		if (connection.nickname === null) {
