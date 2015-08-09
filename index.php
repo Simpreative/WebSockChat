@@ -130,6 +130,7 @@
 		$("#alert").html("");
 		$("#connmain").css("display", "none");
 		$("#chatmain").css("display", "");
+		$("#nickname").unbind("keypress");
 	}
 
 	function HandShakeClose(){
@@ -144,6 +145,16 @@
 					return false;
 				} else {
 					send($("#inputMessage").val());
+				}
+			}
+
+		});
+		$("#nickname").bind("keypress",function(event){ 
+			if(event.keyCode == 13){
+				if($("#nickname").val() == "") {
+					return false;
+				} else {
+					$("#btn-connect").click();
 				}
 			}
 
