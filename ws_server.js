@@ -13,6 +13,7 @@ var server = ws.createServer(function (connection) {
 		regMatch = regPacket.exec(str.trim());
 		if(regMatch === null) {
 			connection.close(500, "Bad Request");
+			return;
 		}
 		Protocol = regMatch[1];
 
@@ -42,7 +43,8 @@ var server = ws.createServer(function (connection) {
 	}
 	)
 	connection.on("close", function () {
-		broadcast("<span style='color: #C4A000;'>" + connection.nickname + " 님이 퇴장하셨습니다</span>");
+		if (connection.nickname !== null) {
+			broadcast("<span style='color: #C4A000;'>" + connection.nickname + " 님이 퇴장하셨습니다</span>");
 	})
 }).listen(8000)
 
