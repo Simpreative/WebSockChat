@@ -55,8 +55,8 @@ wSocket.onerror = function(e){ addOutput("Error"); status=false; }
 
 	function sendping(){
 		if(!status) return;
-	wSocket.send("PING");
 	temp1 = microtime(true);
+	wSocket.send("PING");
 	clearTimeout(pingtimer);
 	pingtimer=setTimeout(sendping,5000);
 	}
