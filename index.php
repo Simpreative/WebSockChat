@@ -48,6 +48,7 @@
 				return;
 			} else if(Protocol == "HELO") {
 				HandShakeEnd();
+				return;
 			}
 
 			regText = regMatch[2];
