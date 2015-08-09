@@ -39,12 +39,21 @@ function goChat(addr,port){
 	<th>ADDRESS</th>
 	<th>PORT</th>
 	</tr>
+
 	<tr onclick="goChat(this.getElementsByTagName('td')[3].textContent,this.getElementsByTagName('td')[4].textContent);">
 	<td>Simpreative</td>
 	<td>Ketpaku</td>
 	<td>NO</td>
 	<td>chat.pe1.me</td>
 	<td>8000</td>
+	</tr>
+
+	<tr onclick="goChat(this.getElementsByTagName('td')[3].textContent,this.getElementsByTagName('td')[4].textContent);">
+	<td>Simpreative2</td>
+	<td>Ketpaku</td>
+	<td>NO</td>
+	<td>chat.pe1.me</td>
+	<td>8001</td>
 	</tr>
 
 	</table>
