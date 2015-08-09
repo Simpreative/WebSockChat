@@ -29,7 +29,7 @@ var server = ws.createServer(function (connection) {
 				if(connection.nickname != null) {
 					connection.sendText(connection.nickname);
 				}
-			}
+			});
 		}
 
 		// TEXT Part
