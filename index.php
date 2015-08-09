@@ -25,7 +25,7 @@ function microtime(get_as_float) {
 <script type="text/javascript">
 var myNick;
 var wSocket,status,pingtimer,temp1;
-var audio = new Audio('alert.wav');
+var audio = new Audio('alert/Argon.ogg');
 function openChat(addr,port){
 wSocket = new WebSocket("ws://"+addr+":"+port+"/");
 wSocket.onmessage = function(e){ 
