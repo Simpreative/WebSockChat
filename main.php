@@ -14,12 +14,32 @@ html, body {
 	height: 100%;
 	overflow: hidden;
 }
+tr:hover {
+    background: #000 !important;
+	cursor:hand;
+}
+tr:hover td {
+    background: #c7d4dd !important;
+}
 </style>
 </head>
 <body>
 <div style="position: relative; height: 100%;">
-	<div id="output" style="position: absolute; width: 100%; height: 95%; overflow: scroll; overflow-x: hidden;"></div>
-	<input type="text" id="inputMessage" style="position: absolute; width: 100%; height: 5%; bottom: 0; font-size: 3vh;">
+	<table id="list" style="position: absolute; width: 100%; height: 95%; overflow: scroll; overflow-x: hidden;">
+	<tr>
+	<th>서버 제목</th>
+	<th>관리자</th>
+	<th>암호</th>
+	<th>ADDR</th>
+	</tr>
+	<tr onclick="console.log(this.childNodes);">
+	<td>Simpreative</td>
+	<td>Ketpaku</td>
+	<td>NO</td>
+	<td>chat.pe1.me:8000</td>
+	</tr>
+
+	</table>
 </div>
 </body>
 </html>
