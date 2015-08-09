@@ -23,16 +23,28 @@ function microtime(get_as_float) {
 }
 </script>
 <script type="text/javascript">
+var myNick;
 var wSocket,status,pingtimer,temp1;
 var audio = new Audio('alert.wav');
 function openChat(addr,port){
 wSocket = new WebSocket("ws://"+addr+":"+port+"/");
 wSocket.onmessage = function(e){ 
-	if(e.data == "PONG"){
-		addOutput("핑 : "+(microtime(true) - temp1)+"ms");
-		return;
+
+		regPacket = /([A-Z]{4})\s?(.*)/g;
+		regMatch = regPacket.exec(e.data.trim());
+		if(regMatch === null) {
+			addOutput("<span style='color:#FF0000;'>[경고]</span> 서버가 알수없는 패킷을 보냈습니다. \""+e.data+"\"");
+			return;
+		}
+		Protocol = regMatch[1];
+
+	if(Protocol == "PONG"){
+		$("#output")[0].innerHTML += "핑 : "+(Math.round(microtime(true) - temp1),4)+"ms"+"<br />\n";
+	} else if(Protocol == "CHAT"){
+		addOutput(e.data);
+	} else {
+			addOutput("<span style='color:#FF0000;'>[경고]</span> 서버가 알수없는 패킷을 보냈습니다. \""+e.data+"\"");
 	}
-		addOutput(e.data); 
 }
 wSocket.onopen = function(e){ addOutput("서버 연결 완료"); pingtimer=setTimeout(sendping,5000); HandShakeWait(); }
 wSocket.onclose = function(e){ addOutput("연결이 종료 되었습니다. "+e.reason); status=false; clearTimeout(pingtimer); HandShakeClose(); }
