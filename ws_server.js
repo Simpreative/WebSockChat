@@ -24,6 +24,12 @@ var server = ws.createServer(function (connection) {
 			clearTimeout(connection.timerout);
 			connection.timerout = setTimeout(connection.timeout,10000);
 			return;
+		} else if(Protocol == "LIST") {
+			server.connections.forEach(function (connection) {
+				if(connection.nickname != null) {
+					connection.sendText(connection.nickname);
+				}
+			}
 		}
 
 		// TEXT Part
@@ -67,7 +73,7 @@ var server = ws.createServer(function (connection) {
 			broadcast("CHAT <span style='color: #C4A000;'>" + connection.nickname + " 님이 퇴장하셨습니다 (" + reason + ")</span>");
 		}
 	});
-	
+
 	connection.on("error", function (e) {
 		console.log("An error occurred: " + e);
 		if(connection.nickname !== null) {
