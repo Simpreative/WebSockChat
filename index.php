@@ -167,11 +167,12 @@
 		$("#alert").html("<div class='alert alert-info' role='alert'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span><span class='sr-only'>정보:</span> 서버에 연결중입니다...</div>");
 		openChat(address);
 	}
-
-	$("#btn-connect").click(function() {
-		var selectedServer = $("#server option:selected").val();
-		goChat(selectedServer);
-	});
+	$(function(){
+		$("#btn-connect").click(function() {
+			var selectedServer = $("#server option:selected").val();
+			goChat(selectedServer);
+		});
+	}
 </script>
 </head>
 <body>
@@ -187,7 +188,7 @@
 										<div id="alert"></div>
 									</div>
 									<div class="form-group">
-										<select class="form-control"name="server">
+										<select class="form-control" id="server">
 											<option value="chat.pe1.me:8000">Simpreative #1</option>
 											<option value="chat.pe1.me:8001">Simpreative #2</option>
 										</select>
