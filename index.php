@@ -93,7 +93,8 @@
 
 			if(regText == "clear") {
 				$("#output")[0].innerHTML = "";
-			} else if(regText == "nick") {
+			} else if(regText.substring(0,4) == "nick") {
+				regMatch = /^\/(.*)\s(.*)/g.exec(x.trim());
 				if(regMatch[2] != null) {
 					wSocket.send("NICK " + regMatch[2]);
 				} else {
