@@ -1,4 +1,5 @@
 var ws = require("nodejs-websocket");
+var Autolinker = require('autolinker');
 var microtime = require("microtime");
 var util = require("util");
 
@@ -53,7 +54,7 @@ var server = ws.createServer(function (connection) {
 		}
 
 		if (Protocol == "CHAT") {
-			broadcast("CHAT [" + connection.nickname + "] " + regText);
+			broadcast("CHAT [" + connection.nickname + "] " + Autolinker.link(regText));
 			return;
 		} else {
 			connection.close(500, "Bad Request");
@@ -71,7 +72,7 @@ var server = ws.createServer(function (connection) {
 function isDuplicateNick(nickname) {
 	var isDup = false;
 	server.connections.forEach(function (connection) {
-		if(nickname == connection.nickname) {
+		if(nickname.toLowerCase() == connection.nickname.toLowerCase()) {
 			isDup = true;
 		}
 	})

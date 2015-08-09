@@ -45,7 +45,7 @@
 			Protocol = regMatch[1];
 
 			if(Protocol == "PONG"){
-				$("#output")[0].innerHTML += "핑 : "+(Math.round((microtime(true) - temp1)*1000))+"ms"+"<br />\n";
+				//$("#output")[0].innerHTML += "핑 : "+(Math.round((microtime(true) - temp1)*1000))+"ms"+"<br />\n";
 				return;
 			} else if(Protocol == "HELO") {
 				HandShakeEnd();
