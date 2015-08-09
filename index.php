@@ -23,10 +23,12 @@ function microtime(get_as_float) {
 }
 </script>
 <script type="text/javascript">
-	var wSocket = new WebSocket("ws://chat.pe1.me:8000/");
-	var audio = new Audio('alert.wav');
-	var status = false;
-	var pingtimer = null;
+var wSocket,status,pingtimer;
+var audio = new Audio('alert.wav');
+function openChat(addr,port){
+wSocket = new WebSocket("ws://"+addr+":"+port+"/");
+}
+
 	audio.volume=0.5;
 	wSocket.onmessage = function(e){ addOutput(e.data); }
 	wSocket.onopen = function(e){ addOutput("서버 연결 완료"); status=true; pingtimer=setTimeout(sendping,5000); }
@@ -63,8 +65,7 @@ function microtime(get_as_float) {
 
 		});
 	});
-</script>
-<script>
+
 function getTime() {
     var today=new Date();
     var h=today.getHours();
@@ -96,7 +97,8 @@ html, body {
 </style>
 <script type="text/javascript">
 function goChat(addr,port){
-	alert(addr + port);
+	openChat(addr,port);
+	$("#list").css("display","none");
 }
 </script>
 </head>
