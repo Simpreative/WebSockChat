@@ -192,7 +192,7 @@
 										<div id="alert"></div>
 									</div>
 									<div class="form-group">
-										<select class="form-control" name="server">
+										<select class="form-control"name="server">
 											<option value="chat.pe1.me:8000">Simpreative #1</option>
 											<option value="chat.pe1.me:8001">Simpreative #2</option>
 										</select>
@@ -206,7 +206,7 @@
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-6 col-sm-offset-3">
-												<input type="button class="form-control"" id="btn-connect" tabindex="3" class="btn btn-success" value="로그인">
+												<input type="button" class="form-control" id="btn-connect" tabindex="3" class="btn btn-success" value="로그인">
 											</div>
 										</div>
 									</div>
