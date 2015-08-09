@@ -73,13 +73,15 @@ wSocket.onerror = function(e){ addOutput("Error"); status=false; }
 
 		if(regMatch !== null){
 			regText = regMatch[0];
+						console.log(regMatch);
+
 			if(regText == "clear"){
 				$("#output")[0].innerHTML = "";
 			} else {
 				addOutput("알 수 없는 명령어");
 			}
 		} else {
-		wSocket.send(x); 
+		wSocket.send("CHAT "+x); 
 		$("#inputMessage").val(""); 
 		}
 	}
