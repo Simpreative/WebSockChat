@@ -23,8 +23,7 @@
 		}
 	</script>
 <script>
-$(function() {
-	var status = false;
+	var status;
 	var myNick;
 	var wSocket,pingtimer,temp1;
 	var audio = new Audio('alert/Argon.ogg');
@@ -58,7 +57,7 @@ $(function() {
 			if(Protocol == "CHAT"){
 				addOutput(regText);
 			} else if(Protocol == "ERRO") {
-				if(!status) {
+				if(status == "false") {
 					$("#alert").html("<div class='alert alert-danger' role='alert'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span><span class='sr-only'>오류:</span> 존재하는 닉네임 입니다.</div>");
 					$("#nickname").attr("disabled", false);
 					$("#btn-connect").attr("disabled", false);
@@ -76,7 +75,7 @@ $(function() {
 	audio.volume=0.5;
 
 	function sendping(){
-		if(!status) return;
+		if(status == "false") return;
 		temp1 = microtime(true);
 		wSocket.send("PING");
 		clearTimeout(pingtimer);
@@ -84,7 +83,7 @@ $(function() {
 	}
 
 	function send(x){ 
-		if(!status) return;
+		if(status == "false") return;
 		regPacket = /^\/(.*)/g;
 		regMatch = regPacket.exec(x.trim());	
 
@@ -104,7 +103,7 @@ $(function() {
 	}
 
 	function addOutput(x){
-		if(!status) return;
+		if(status == "false") return;
 		$("#output")[0].innerHTML += getTime() + x + "<br />\n";
 		audio.play();
 		$('#output').stop().animate({
@@ -157,7 +156,6 @@ $(function() {
     if (i<10) {i = "0" + i};  // add zero in front of numbers < 10
     return i;
 }
-});
 </script>
 <link rel="stylesheet" href="style.css">
 <script>
