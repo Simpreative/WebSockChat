@@ -27,12 +27,12 @@ var wSocket,status,pingtimer;
 var audio = new Audio('alert.wav');
 function openChat(addr,port){
 wSocket = new WebSocket("ws://"+addr+":"+port+"/");
+wSocket.onmessage = function(e){ addOutput(e.data); }
+wSocket.onopen = function(e){ addOutput("서버 연결 완료"); status=true; pingtimer=setTimeout(sendping,5000); }
+wSocket.onclose = function(e){ addOutput("서버 연결 종료"); status=false; clearTimeout(pingtimer); }
 }
 
 	audio.volume=0.5;
-	wSocket.onmessage = function(e){ addOutput(e.data); }
-	wSocket.onopen = function(e){ addOutput("서버 연결 완료"); status=true; pingtimer=setTimeout(sendping,5000); }
-	wSocket.onclose = function(e){ addOutput("서버 연결 종료"); status=false; clearTimeout(pingtimer); }
 
 	function sendping(){
 	wSocket.send("PING");
