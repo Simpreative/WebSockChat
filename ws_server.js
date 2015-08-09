@@ -72,8 +72,10 @@ var server = ws.createServer(function (connection) {
 function isDuplicateNick(nickname) {
 	var isDup = false;
 	server.connections.forEach(function (connection) {
-		if(nickname.toLowerCase() == connection.nickname.toLowerCase()) {
-			isDup = true;
+		if(connection.nickname != null) {
+			if(nickname.toLowerCase() == connection.nickname.toLowerCase()) {
+				isDup = true;
+			}
 		}
 	})
 	return isDup;
