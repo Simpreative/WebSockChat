@@ -61,7 +61,6 @@
 					$("#alert").html("<div class='alert alert-danger' role='alert'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span><span class='sr-only'>오류:</span> 존재하는 닉네임 입니다.</div>");
 					$("#nickname").attr("disabled", false);
 					$("#btn-connect").attr("disabled", false);
-					wSocket.close();
 				}
 			} else {
 				addOutput("<span style='color:#FF0000;'>[경고]</span> 서버가 알 수 없는 패킷을 보냈습니다. \""+e.data+"\"");
