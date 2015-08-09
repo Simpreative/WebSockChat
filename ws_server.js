@@ -11,7 +11,11 @@ var server = ws.createServer(function (connection) {
 	connection.on("text", function (str) {
 		regPacket = /([A-Z]{4})\s?(.*)/g;
 		regMatch = regPacket.exec(str.trim());
-		Protocol = regMatch[0];
+		if(regMatch === null) {
+			connection.close(500, "Bad Request");
+		}
+		
+		Protocol = regMatch[1];
 
 		// No TEXT Part
 		if(Protocol == "PING") {
@@ -24,7 +28,7 @@ var server = ws.createServer(function (connection) {
 		}
 
 		// TEXT Part
-		regText = htmlspecialchars(regMatch[1],"ENT_QUOTES");
+		regText = htmlspecialchars(regMatch[2], "ENT_QUOTES");
 
 		if(Protocol == "NICK") {
 			connection.nickname = regText;
@@ -34,7 +38,7 @@ var server = ws.createServer(function (connection) {
 		}
 
 		if (connection.nickname === null) {
-			connection.close(1012, "Not Authorized");
+			connection.close(401, "Unauthorized");
 		}
 	}
 	)
