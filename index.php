@@ -155,7 +155,7 @@
     return i;
 }
 </script>
-<link rel="stylesheet" href="://chat.pe1.me/style.css">
+<link rel="stylesheet" href="style.css">
 <script>
 	function goChat(addr,port) {
 		goChat(addr + ":" + port);
