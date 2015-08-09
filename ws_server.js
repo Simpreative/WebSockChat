@@ -19,11 +19,9 @@ var server = ws.createServer(function (connection) {
 
 		// No TEXT Part
 		if(Protocol == "PING") {
-			//broadcast("[" + connection.nickname + "] " + str);
 			connection.sendText("PONG");
 			clearTimeout(connection.timerout);
 			connection.timerout = setTimeout(connection.timeout,10000);
-			//broadcast("[SERVER] PONG " + connection.nickname);
 			return;
 		}
 
@@ -31,23 +29,52 @@ var server = ws.createServer(function (connection) {
 		regText = htmlspecialchars(regMatch[2], "ENT_QUOTES");
 
 		if(Protocol == "NICK") {
-			connection.nickname = regText;
-			broadcast("CHAT <span style='color: #CE5C00;'>" + regText + " 님이 입장하셨습니다</span>");
-		} else if (Protocol == "CHAT") {
-			broadcast("CHAT [" + connection.nickname + "] " + regText);
+			if (isDuplicateNick(regText)) {
+				connection.sendText("ERRO 이미 존재하는 닉네임 입니다");
+				return;
+			} else {
+				if (connection.nickname === null) {
+					connection.nickname = regText;
+					broadcast("CHAT <span style='color: #CE5C00;'>" + regText + " 님이 입장하셨습니다</span>");
+					return;
+				} else {
+					var oldNick = connection.nickname;
+					connection.nickname = regText;
+					broadcast("CHAT <span style='color: #CE5C00;'>" + oldNick + " 님이 닉네임을 " + regText + "로 변경하셨습니다");
+					return;
+				}
+			}
 		}
 
 		if (connection.nickname === null) {
 			connection.close(401, "Unauthorized");
+			return;
 		}
-	}
-	)
+
+		if (Protocol == "CHAT") {
+			broadcast("CHAT [" + connection.nickname + "] " + regText);
+			return;
+		} else {
+			connection.close(500, "Bad Request");
+			return;
+		}
+	});
+
 	connection.on("close", function () {
 		if (connection.nickname !== null) {
 			broadcast("CHAT <span style='color: #C4A000;'>" + connection.nickname + " 님이 퇴장하셨습니다</span>");
 		}
+	});
+}).listen(8000);
+
+function isDuplicateNick(nickname) {
+	server.connections.forEach(function (connection) {
+		if(nickname == connection.nickname) {
+			return true;
+		}
 	})
-}).listen(8000)
+	return false;
+}
 
 function broadcast(str) {
 	server.connections.forEach(function (connection) {
