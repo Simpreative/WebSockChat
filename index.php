@@ -43,7 +43,7 @@ wSocket.onmessage = function(e){
 		return;
 	}
 	
-	regText = htmlspecialchars(regMatch[2], "ENT_QUOTES");
+	regText = regMatch[2];
 
 	if(Protocol == "CHAT"){
 		addOutput(regText);
@@ -68,8 +68,20 @@ wSocket.onerror = function(e){ addOutput("Error"); status=false; }
 
 	function send(x){ 
 		if(!status) return;
+		regPacket = /^\/(.*)/g;
+		regMatch = regPacket.exec(e.data.trim());	
+
+		if(regMatch !== null){
+			regText = regMatch[0];
+			if(regText == "clear"){
+				$("#output")[0].innerHTML = "";
+			} else {
+				addOutput("알 수 없는 명령어");
+			}
+		} else {
 		wSocket.send(x); 
 		$("#inputMessage").val(""); 
+		}
 	}
 
 	function addOutput(x){
