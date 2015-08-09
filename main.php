@@ -32,7 +32,7 @@ tr:hover td {
 	<th>암호</th>
 	<th>ADDR</th>
 	</tr>
-	<tr onclick="console.log(this.childNodes);">
+	<tr onclick="console.log(this.getElementsByTagName('td'));">
 	<td>Simpreative</td>
 	<td>Ketpaku</td>
 	<td>NO</td>
