@@ -74,6 +74,7 @@ wSocket.onerror = function(e){ addOutput("Error"); console.log(e); }
 		$("#square").css("display","none");
 		$("#joinNICK").unbind("keypress");
 		$("#handshakeform")[0].innerHTML = "";
+		$("#list").css("display","none");
 	}
 
 	function HandShakeClose(){
@@ -178,8 +179,8 @@ openChat(addr,port);
 </div>
 
 <div id="square">
-<span id="handshakestatus" style="font-size:6vh;"></span>
-<span id="handshakeform"></span>
+<div id="handshakestatus" style="font-size:6vh;"></div>
+<div id="handshakeform"></div>
 </div>
 
 <div style="position: relative; height: 100%;">
