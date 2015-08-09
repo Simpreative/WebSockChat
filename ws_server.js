@@ -7,26 +7,36 @@ function htmlspecialchars(string,quote_style,charset,double_encode){var optTemp=
 var server = ws.createServer(function (connection) {
 	connection.nickname = null;
 	connection.timerout = setTimeout(connection.timeout,10000);
-	connection.timeout = function(){ broadcast(connection.nickname + " ping time out"); connection.close(1011,"PING TIMEOUT"); }
+	connection.timeout = function(){ broadcast(connection.nickname + " Ping timeout"); connection.close(1011,"Ping Timeout"); }
 	connection.on("text", function (str) {
+		regPacket = /([A-Z]{4})\s?(.*)/g;
+		regMatch = regPacket.exec(str.trim());
+		Protocol = regMatch[0];
 
-			if(str == "PING"){
-				broadcast("[" + connection.nickname + "] " + str);
-				clearTimeout(connection.timerout);
-				connection.timerout = setTimeout(connection.timeout,10000);
-				broadcast("[SERVER] PONG "+connection.nickname);
-				return;
-			}
-			
-			str = htmlspecialchars(str,"ENT_QUOTES");
-
-			if (connection.nickname === null) {
-				connection.nickname = str;
-				broadcast("<span style='color: #CE5C00;'>" + str + " 님이 입장하셨습니다</span>");
-			} else {
-				broadcast("[" + connection.nickname + "] " + str);
-			}
+		// No TEXT Part
+		if(Protocol == "PING") {
+			//broadcast("[" + connection.nickname + "] " + str);
+			connection.sendText("PONG");
+			clearTimeout(connection.timerout);
+			connection.timerout = setTimeout(connection.timeout,10000);
+			//broadcast("[SERVER] PONG " + connection.nickname);
+			return;
 		}
+
+		// TEXT Part
+		regText = htmlspecialchars(regMatch[1],"ENT_QUOTES");
+
+		if(Protocol == "NICK") {
+			connection.nickname = regText;
+			broadcast("CHAT <span style='color: #CE5C00;'>" + regText + " 님이 입장하셨습니다</span>");
+		} else if (Protocol == "CHAT") {
+			broadcast("CHAT [" + connection.nickname + "] " + str);
+		}
+
+		if (connection.nickname === null) {
+			connection.close(1012, "Not Authorized");
+		}
+	}
 	)
 	connection.on("close", function () {
 		broadcast("<span style='color: #C4A000;'>" + connection.nickname + " 님이 퇴장하셨습니다</span>");
