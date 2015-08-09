@@ -172,7 +172,7 @@
 			var selectedServer = $("#server option:selected").val();
 			goChat(selectedServer);
 		});
-	}
+	});
 </script>
 </head>
 <body>
