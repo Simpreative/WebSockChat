@@ -68,12 +68,13 @@ var server = ws.createServer(function (connection) {
 }).listen(8000);
 
 function isDuplicateNick(nickname) {
+	var isDup = false;
 	server.connections.forEach(function (connection) {
 		if(nickname == connection.nickname) {
-			return true;
+			isDup = true;
 		}
 	})
-	return false;
+	return isDup;
 }
 
 function broadcast(str) {
