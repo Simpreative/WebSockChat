@@ -192,21 +192,21 @@
 										<div id="alert"></div>
 									</div>
 									<div class="form-group">
-										<select name="server">
+										<select class="form-control" name="server">
 											<option value="chat.pe1.me:8000">Simpreative #1</option>
 											<option value="chat.pe1.me:8001">Simpreative #2</option>
 										</select>
 									</div>
 									<div class="form-group">
-										<input type="text" name="nickname" id="nickname" tabindex="1" placeholder="닉네임" value="" required>
+										<input type="text" class="form-control" name="nickname" id="nickname" tabindex="1" placeholder="닉네임" value="" required>
 									</div>
 									<div class="form-group">
-										<input type="password" name="password" id="password" tabindex="2" placeholder="서버 암호" disabled>
+										<input type="password" class="form-control" name="password" id="password" tabindex="2" placeholder="서버 암호" disabled>
 									</div>
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-6 col-sm-offset-3">
-												<input type="button" id="btn-connect" tabindex="3" class="btn btn-success" value="로그인">
+												<input type="button class="form-control"" id="btn-connect" tabindex="3" class="btn btn-success" value="로그인">
 											</div>
 										</div>
 									</div>
