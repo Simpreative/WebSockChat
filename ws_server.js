@@ -67,13 +67,6 @@ var server = ws.createServer(function (connection) {
 			broadcast("CHAT <span style='color: #C4A000;'>" + connection.nickname + " 님이 퇴장하셨습니다 (" + reason + ")</span>");
 		}
 	});
-	
-	connection.on("error", function (e) {
-		console.log("An error occurred: " + e);
-		if(connection.nickname !== null) {
-			broadcast("CHAT <span style='color: #C4A000;'>" + connection.nickname + " 님이 퇴장하셨습니다 (" + e + ")</span>");
-		}
-	});
 }).listen(8000);
 
 function isDuplicateNick(nickname) {
