@@ -23,30 +23,40 @@ function microtime(get_as_float) {
 }
 </script>
 <script type="text/javascript">
-var wSocket,status,pingtimer;
+var wSocket,status,pingtimer,temp1;
 var audio = new Audio('alert.wav');
 function openChat(addr,port){
 wSocket = new WebSocket("ws://"+addr+":"+port+"/");
-wSocket.onmessage = function(e){ addOutput(e.data); }
-wSocket.onopen = function(e){ addOutput("서버 연결 완료"); status=true; pingtimer=setTimeout(sendping,5000); HandShakeWait(); }
+wSocket.onmessage = function(e){ 
+	if(e.data == "PONG"){
+		addOutput("핑 : "+(microtime(true) - temp1)+"ms");
+		return;
+	}
+		addOutput(e.data); 
+}
+wSocket.onopen = function(e){ addOutput("서버 연결 완료"); pingtimer=setTimeout(sendping,5000); HandShakeWait(); }
 wSocket.onclose = function(e){ addOutput("연결이 종료 되었습니다. "+e.reason); status=false; clearTimeout(pingtimer); HandShakeClose(); }
-wSocket.onerror = function(e){ addOutput("Error"); console.log(e); }
+wSocket.onerror = function(e){ addOutput("Error"); status=false; }
 }
 
 	audio.volume=0.5;
 
 	function sendping(){
+		if(!status) return;
 	wSocket.send("PING");
+	temp1 = microtime(true);
 	clearTimeout(pingtimer);
 	pingtimer=setTimeout(sendping,5000);
 	}
 
 	function send(x){ 
+		if(!status) return;
 		wSocket.send(x); 
 		$("#inputMessage").val(""); 
 	}
 
 	function addOutput(x){
+		if(!status) return;
 		$("#output")[0].innerHTML += getTime() + x + "<br />\n";
 		audio.play();
 		$('#output').stop().animate({
@@ -55,6 +65,7 @@ wSocket.onerror = function(e){ addOutput("Error"); console.log(e); }
 	}
 
 	function HandShakeWait(){
+		status = false;
 		$("#handshakestatus")[0].innerHTML = "서버 연결완료!";
 		$("#handshakeform")[0].innerHTML = '닉네임 입력 : <input type="text" id="joinNICK" style="height: 5%; font-size: 4vh;" />';
 		$("#joinNICK").bind("keypress",function(event){ 
@@ -62,7 +73,7 @@ wSocket.onerror = function(e){ addOutput("Error"); console.log(e); }
 				if($("#joinNICK").val() == "") {
 					return false;
 				} else {
-					send("NICK "+$("#joinNICK").val());
+					wSocket.send("NICK "+$("#joinNICK").val());
 					HandShakeEnd();
 				}
 			}
@@ -71,6 +82,7 @@ wSocket.onerror = function(e){ addOutput("Error"); console.log(e); }
 	}
 
 	function HandShakeEnd(){
+		status = true;
 		$("#square").css("display","none");
 		$("#joinNICK").unbind("keypress");
 		$("#handshakeform")[0].innerHTML = "";
@@ -78,6 +90,7 @@ wSocket.onerror = function(e){ addOutput("Error"); console.log(e); }
 	}
 
 	function HandShakeClose(){
+		status = false;
 		$("#handshakestatus")[0].innerHTML = "서버와 연결이 끊어졌습니다.";
 		$("#joinNICK").unbind("keypress");
 		$("#handshakeform")[0].innerHTML = "";	
