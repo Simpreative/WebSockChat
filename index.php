@@ -72,14 +72,14 @@ wSocket.onerror = function(e){ addOutput("Error"); status=false; }
 		regMatch = regPacket.exec(x.trim());	
 
 		if(regMatch !== null){
-			regText = regMatch[0];
-						console.log(regMatch);
+			regText = regMatch[1];
 
 			if(regText == "clear"){
 				$("#output")[0].innerHTML = "";
 			} else {
 				addOutput("알 수 없는 명령어");
 			}
+			$("#inputMessage").val(""); 
 		} else {
 		wSocket.send("CHAT "+x); 
 		$("#inputMessage").val(""); 
