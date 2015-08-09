@@ -25,9 +25,9 @@ var server = ws.createServer(function (connection) {
 			connection.timerout = setTimeout(connection.timeout,10000);
 			return;
 		} else if(Protocol == "LIST") {
-			server.connections.forEach(function (connection) {
-				if(connection.nickname != null) {
-					connection.sendText("CHAT <span style='color: #5C3566'>" + connection.nickname + "</span>");
+			server.connections.forEach(function (user) {
+				if(user.nickname != null) {
+					connection.sendText("CHAT <span style='color: #5C3566'>" + user.nickname + "</span>");
 				}
 			});
 			return;
