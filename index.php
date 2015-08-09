@@ -29,7 +29,8 @@ function openChat(addr,port){
 wSocket = new WebSocket("ws://"+addr+":"+port+"/");
 wSocket.onmessage = function(e){ addOutput(e.data); }
 wSocket.onopen = function(e){ addOutput("서버 연결 완료"); status=true; pingtimer=setTimeout(sendping,5000); }
-wSocket.onclose = function(e){ addOutput("서버 연결 종료"); status=false; clearTimeout(pingtimer); }
+wSocket.onclose = function(e){ addOutput("연결이 종료 되었습니다. "+e.reason); status=false; clearTimeout(pingtimer); }
+wSocket.onerror = function(e){ addOutput("Error"); console.log(e); }
 }
 
 	audio.volume=0.5;
