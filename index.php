@@ -85,18 +85,18 @@
 
 	function send(x){ 
 		if(status == "false") return;
-		regPacket = /^\/(.*)\s?(.*)/g;
-		regMatch = regPacket.exec(x.trim());	
+		cmdPacket = /^\/(.*)\s?(.*)/g;
+		cmdMatch = cmdPacket.exec(x.trim());	
 
-		if(regMatch !== null){
-			regText = regMatch[1];
+		if(cmdMatch !== null){
+			cmdText = cmdMatch[1];
 
-			if(regText == "clear") {
+			if(cmdText == "clear") {
 				$("#output")[0].innerHTML = "";
-			} else if(regText.substring(0,4) == "nick") {
-				regMatch = /^\/(.*)\s(.*)/g.exec(x.trim());
-				if(regMatch[2] != null) {
-					wSocket.send("NICK " + regMatch[2]);
+			} else if(cmdText.substring(0,4) == "nick") {
+				cmdMatch = /^\/(.*)\s(.*)/g.exec(x.trim());
+				if(cmdMatch[2] != null) {
+					wSocket.send("NICK " + cmdMatch[2]);
 				} else {
 					addOutput("닉네임 변경: /nick <닉네임>");
 				}
