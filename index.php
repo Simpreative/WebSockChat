@@ -94,9 +94,9 @@
 			if(cmdText == "clear") {
 				$("#output")[0].innerHTML = "";
 			} else if(cmdText.substring(0,4) == "nick") {
-				cmdMatch = /^\/(.*)\s(.*)/g.exec(x.trim());
-				if(cmdMatch[2] != null) {
-					wSocket.send("NICK " + cmdMatch[2]);
+				cmdMatch = /^\/nick\s(.*)/g.exec(x.trim());
+				if(cmdMatch[1] != null) {
+					wSocket.send("NICK " + cmdMatch[1]);
 				} else {
 					addOutput("닉네임 변경: /nick <닉네임>");
 				}
