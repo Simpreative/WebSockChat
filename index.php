@@ -100,7 +100,7 @@
 				} else {
 					addOutput("닉네임 변경: /nick <닉네임>");
 				}
-			} else if(cmeText == "list") {
+			} else if(cmdText == "list") {
 				wSocket.send("LIST");
 			} else {
 				addOutput("알 수 없는 명령어입니다.");
