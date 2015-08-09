@@ -95,6 +95,20 @@ html, body {
     background: #c7d4dd !important;
 	cursor:hand;
 }
+
+#square {
+    position: absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    margin:0 auto;
+    margin-top:50px;
+    width:80%;
+    height:100%;
+    background-color:#333;
+    z-index:10;
+}
 </style>
 <script type="text/javascript">
 function goChat(addr,port){
@@ -132,6 +146,8 @@ function goChat(addr,port){
 
 	</table>
 </div>
+
+<div id="square"></div>
 
 <div style="position: relative; height: 100%;">
 	<div id="output" style="position: absolute; width: 100%; height: 95%; overflow: scroll; overflow-x: hidden;"></div>
