@@ -155,12 +155,7 @@
     return i;
 }
 </script>
-<style>
-	html, body {
-		height: 100%;
-		overflow: hidden;
-	}
-</style>
+<link rel="stylesheet" href="://chat.pe1.me/style.css">
 <script>
 	function goChat(addr,port) {
 		goChat(addr + ":" + port);
@@ -206,7 +201,7 @@
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-6 col-sm-offset-3">
-												<input type="button" class="form-control" id="btn-connect" tabindex="3" class="btn btn-success" value="로그인">
+												<input type="button" id="btn-connect" tabindex="3" class="form-control btn btn-success" value="연결">
 											</div>
 										</div>
 									</div>
