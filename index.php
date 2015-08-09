@@ -10,21 +10,23 @@
 	<script type="text/javascript" src="http://pe1.me/data/public/common/function.js"></script>
 	<script type="text/javascript">
 		function microtime(get_as_float) {
-	//  discuss at: http://phpjs.org/functions/microtime/
-	// original by: Paulo Freitas
-	//   example 1: timeStamp = microtime(true);
-	//   example 1: timeStamp > 1000000000 && timeStamp < 2000000000
-	//   returns 1: true
+			//  discuss at: http://phpjs.org/functions/microtime/
+			// original by: Paulo Freitas
+			//   example 1: timeStamp = microtime(true);
+			//   example 1: timeStamp > 1000000000 && timeStamp < 2000000000
+			//   returns 1: true
 
-	var now = new Date().getTime() / 1000;
-	var s = parseInt(now, 10);
+			var now = new Date().getTime() / 1000;
+			var s = parseInt(now, 10);
 
-	return (get_as_float) ? now : (Math.round((now - s) * 1000) / 1000) + ' ' + s;
-}
-</script>
-<script type="text/javascript">
+			return (get_as_float) ? now : (Math.round((now - s) * 1000) / 1000) + ' ' + s;
+		}
+	</script>
+<script>
+$(function() {
+	var status = false;
 	var myNick;
-	var wSocket,status,pingtimer,temp1;
+	var wSocket,pingtimer,temp1;
 	var audio = new Audio('alert/Argon.ogg');
 
 	function openChat(addr, port) {
@@ -155,6 +157,7 @@
     if (i<10) {i = "0" + i};  // add zero in front of numbers < 10
     return i;
 }
+});
 </script>
 <link rel="stylesheet" href="style.css">
 <script>
