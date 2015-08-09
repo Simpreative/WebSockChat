@@ -8,7 +8,7 @@ function htmlspecialchars(string,quote_style,charset,double_encode){var optTemp=
 var server = ws.createServer(function (connection) {
 	connection.nickname = null;
 	connection.timerout = setTimeout(connection.timeout,10000);
-	connection.timeout = function(){ broadcast("CHAT <span style='color: #C4A000;'>" + connection.nickname + " 님이 퇴장하셨습니다 (Ping timeout)</span>"); connection.close(1011,"Ping Timeout"); }
+	connection.timeout = function(){ connection.close(1011,"Ping Timeout"); }
 	connection.on("text", function (str) {
 		regPacket = /([A-Z]{4})\s?(.*)/g;
 		regMatch = regPacket.exec(str.trim());
@@ -62,9 +62,9 @@ var server = ws.createServer(function (connection) {
 		}
 	});
 
-	connection.on("close", function () {
+	connection.on("close", function (code, reason) {
 		if (connection.nickname !== null) {
-			broadcast("CHAT <span style='color: #C4A000;'>" + connection.nickname + " 님이 퇴장하셨습니다</span>");
+			broadcast("CHAT <span style='color: #C4A000;'>" + connection.nickname + " 님이 퇴장하셨습니다 ("" + reason + "")</span>");
 		}
 	});
 }).listen(8000);
