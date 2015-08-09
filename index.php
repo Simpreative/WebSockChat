@@ -85,9 +85,51 @@ html, body {
 	height: 100%;
 	overflow: hidden;
 }
+#list tr:hover {
+    background: #fff !important;
+	cursor:hand;
+}
+#list tr:hover td {
+    background: #c7d4dd !important;
+	cursor:hand;
+}
 </style>
+<script type="text/javascript">
+function goChat(addr,port){
+	alert(addr + port);
+}
+</script>
 </head>
 <body>
+<div id="list" style="position: relative; height: 100%;">
+	<table style="position: absolute; width: 100%; height: 95%; overflow: scroll; overflow-x: hidden;">
+	<tr>
+	<th>서버 제목</th>
+	<th>관리자</th>
+	<th>암호</th>
+	<th>ADDRESS</th>
+	<th>PORT</th>
+	</tr>
+
+	<tr onclick="goChat(this.getElementsByTagName('td')[3].textContent,this.getElementsByTagName('td')[4].textContent);">
+	<td>Simpreative</td>
+	<td>Ketpaku</td>
+	<td>NO</td>
+	<td>chat.pe1.me</td>
+	<td>8000</td>
+	</tr>
+
+	<tr onclick="goChat(this.getElementsByTagName('td')[3].textContent,this.getElementsByTagName('td')[4].textContent);">
+	<td>Simpreative2</td>
+	<td>Ketpaku</td>
+	<td>NO</td>
+	<td>chat.pe1.me</td>
+	<td>8001</td>
+	</tr>
+
+	</table>
+</div>
+
 <div style="position: relative; height: 100%;">
 	<div id="output" style="position: absolute; width: 100%; height: 95%; overflow: scroll; overflow-x: hidden;"></div>
 	<input type="text" id="inputMessage" style="position: absolute; width: 100%; height: 5%; bottom: 0; font-size: 3vh;">
