@@ -39,11 +39,16 @@ wSocket.onmessage = function(e){
 		Protocol = regMatch[1];
 
 	if(Protocol == "PONG"){
-		$("#output")[0].innerHTML += "핑 : "+((microtime(true) - temp1).toFixed(4))+"ms"+"<br />\n";
-	} else if(Protocol == "CHAT"){
-		addOutput(e.data);
+		$("#output")[0].innerHTML += "핑 : "+(Math.round((microtime(true) - temp1)*1000)))+"ms"+"<br />\n";
+		return;
+	}
+	
+	regText = htmlspecialchars(regMatch[2], "ENT_QUOTES");
+
+	if(Protocol == "CHAT"){
+		addOutput(regText);
 	} else {
-			addOutput("<span style='color:#FF0000;'>[경고]</span> 서버가 알수없는 패킷을 보냈습니다. \""+e.data+"\"");
+		addOutput("<span style='color:#FF0000;'>[경고]</span> 서버가 알수없는 패킷을 보냈습니다. \""+e.data+"\"");
 	}
 }
 wSocket.onopen = function(e){ addOutput("서버 연결 완료"); pingtimer=setTimeout(sendping,5000); HandShakeWait(); }
