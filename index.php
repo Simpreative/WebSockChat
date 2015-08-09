@@ -28,8 +28,8 @@ var audio = new Audio('alert.wav');
 function openChat(addr,port){
 wSocket = new WebSocket("ws://"+addr+":"+port+"/");
 wSocket.onmessage = function(e){ addOutput(e.data); }
-wSocket.onopen = function(e){ addOutput("서버 연결 완료"); status=true; pingtimer=setTimeout(sendping,5000); }
-wSocket.onclose = function(e){ addOutput("연결이 종료 되었습니다. "+e.reason); status=false; clearTimeout(pingtimer); }
+wSocket.onopen = function(e){ addOutput("서버 연결 완료"); status=true; pingtimer=setTimeout(sendping,5000); HandShakeWait(); }
+wSocket.onclose = function(e){ addOutput("연결이 종료 되었습니다. "+e.reason); status=false; clearTimeout(pingtimer); HandShakeClose(); }
 wSocket.onerror = function(e){ addOutput("Error"); console.log(e); }
 }
 
@@ -52,6 +52,34 @@ wSocket.onerror = function(e){ addOutput("Error"); console.log(e); }
 		$('#output').stop().animate({
 			scrollTop: $("#output")[0].scrollHeight
 		}, 800);
+	}
+
+	function HandShakeWait(){
+		$("#handshakestatus")[0].innerHTML = "서버 연결완료!";
+		$("#handshakeform")[0].innerHTML = '닉네임 입력 : <input type="text" id="joinNICK" style="height: 5%; font-size: 4vh;" />';
+		$("#joinNICK").bind("keypress",function(event){ 
+			if(event.keyCode == 13){
+				if($("#joinNICK").val() == "") {
+					return false;
+				} else {
+					send("NICK "+$("#joinNICK").val());
+					HandShakeEnd();
+				}
+			}
+
+		});
+	}
+
+	function HandShakeEnd(){
+		$("#square").css("display","none");
+		$("#joinNICK").unbind("keypress");
+		$("#handshakeform")[0].innerHTML = "";
+	}
+
+	function HandShakeClose(){
+		$("#handshakestatus")[0].innerHTML = "서버와 연결이 끊어졌습니다.";
+		$("#joinNICK").unbind("keypress");
+		$("#handshakeform")[0].innerHTML = "";	
 	}
 
 	$(document).ready(function(){ 
@@ -97,6 +125,7 @@ html, body {
 }
 
 #square {
+	display:none;
     position: absolute;
     top:0;
     bottom:0;
@@ -105,15 +134,16 @@ html, body {
     margin:0 auto;
     margin-top:50px;
     width:80%;
-    height:100%;
+    height:70%;
     background-color:#333;
     z-index:10;
 }
 </style>
 <script type="text/javascript">
 function goChat(addr,port){
-	openChat(addr,port);
-	$("#list").css("display","none");
+$("#square").css("display","block");
+$("#handshakestatus")[0].innerHTML = "서버 연결중.";
+openChat(addr,port);
 }
 </script>
 </head>
@@ -147,7 +177,10 @@ function goChat(addr,port){
 	</table>
 </div>
 
-<div id="square"></div>
+<div id="square">
+<span id="handshakestatus" style="font-size:6vh;"></span>
+<span id="handshakeform"></span>
+</div>
 
 <div style="position: relative; height: 100%;">
 	<div id="output" style="position: absolute; width: 100%; height: 95%; overflow: scroll; overflow-x: hidden;"></div>
