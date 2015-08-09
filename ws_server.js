@@ -44,7 +44,7 @@ var server = ws.createServer(function (connection) {
 	)
 	connection.on("close", function () {
 		if (connection.nickname !== null) {
-			broadcast("<span style='color: #C4A000;'>" + connection.nickname + " 님이 퇴장하셨습니다</span>");
+			broadcast("CHAT <span style='color: #C4A000;'>" + connection.nickname + " 님이 퇴장하셨습니다</span>");
 		}
 	})
 }).listen(8000)
