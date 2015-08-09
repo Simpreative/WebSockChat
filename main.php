@@ -20,8 +20,14 @@ tr:hover {
 }
 tr:hover td {
     background: #c7d4dd !important;
+	cursor:hand;
 }
 </style>
+<script type="text/javascript">
+function goChat(addr,port){
+	alert(addr + port);
+}
+</script>
 </head>
 <body>
 <div style="position: relative; height: 100%;">
@@ -30,13 +36,15 @@ tr:hover td {
 	<th>서버 제목</th>
 	<th>관리자</th>
 	<th>암호</th>
-	<th>ADDR</th>
+	<th>ADDRESS</th>
+	<th>PORT</th>
 	</tr>
-	<tr onclick="console.log(this.getElementsByTagName('td'));">
+	<tr onclick="goChat(this.getElementsByTagName('td')[3].textContent,this.getElementsByTagName('td')[4].textContent);">
 	<td>Simpreative</td>
 	<td>Ketpaku</td>
 	<td>NO</td>
-	<td>chat.pe1.me:8000</td>
+	<td>chat.pe1.me</td>
+	<td>8000</td>
 	</tr>
 
 	</table>
