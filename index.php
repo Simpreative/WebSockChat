@@ -135,7 +135,20 @@
 
 	function HandShakeClose(){
 		status = false;
-		$("#alert").html("<div class='alert alert-danger' role='alert'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span><span class='sr-only'>오류:</span> 서버와 연결이 끊어졌습니다</div>");	
+		$("#alert").html("<div class='alert alert-danger' role='alert'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span><span class='sr-only'>오류:</span> 서버와 연결이 끊어졌습니다</div>");.
+		$("#connmain").css("display", "");
+		$("#chatmain").css("display", "none");
+		$("#nickname").bind("keypress",function(event){ 
+			if(event.keyCode == 13){
+				if($("#nickname").val() == "") {
+					return false;
+				} else {
+					$("#btn-connect").click();
+				}
+			}
+		});
+		$("#nickname").attr("disabled", false);
+		$("#btn-connect").attr("disabled", false);
 	}
 
 	$(document).ready(function(){ 
@@ -147,7 +160,6 @@
 					send($("#inputMessage").val());
 				}
 			}
-
 		});
 		$("#nickname").bind("keypress",function(event){ 
 			if(event.keyCode == 13){
@@ -157,7 +169,6 @@
 					$("#btn-connect").click();
 				}
 			}
-
 		});
 	});
 
