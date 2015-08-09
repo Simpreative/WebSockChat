@@ -151,6 +151,7 @@ html, body {
     height:70%;
     background-color:#333;
     z-index:10;
+	color:#FFFFFF;
 }
 </style>
 <script type="text/javascript">
