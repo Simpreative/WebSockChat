@@ -112,7 +112,7 @@
 
 	function HandShakeWait(){
 		status = false;
-		$("#alert").html("<div class='alert alert-success' role='alert'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span><span class='sr-only'>성공:</span> 서버에 연결되었습니다</div>");
+		$("#alert").html("<div class='alert alert-success' role='alert'><span class='glyphicon glyphicon-ok' aria-hidden='true'></span><span class='sr-only'>성공:</span> 서버에 연결되었습니다</div>");
 		wSocket.send("NICK " + $("#nickname").val());
 	}
 
@@ -165,7 +165,7 @@
 	function goChat(address) {
 		$("#nickname").attr("disabled", true);
 		$("#btn-connect").attr("disabled", true);
-		$("#alert").html("<div class='alert alert-info' role='alert'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span><span class='sr-only'>정보:</span> 서버에 연결중입니다...</div>");
+		$("#alert").html("<div class='alert alert-info' role='alert'><span class='glyphicon glyphicon-time' aria-hidden='true'></span><span class='sr-only'>정보:</span> 서버에 연결중입니다...</div>");
 		openChat(address);
 	}
 	$(function(){
