@@ -61,6 +61,8 @@
 					$("#alert").html("<div class='alert alert-danger' role='alert'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span><span class='sr-only'>오류:</span> 존재하는 닉네임 입니다.</div>");
 					$("#nickname").attr("disabled", false);
 					$("#btn-connect").attr("disabled", false);
+				} else {
+					addOutput("<span style='color:#FF0000;'>[오류]</span> " + regText);
 				}
 			} else {
 				addOutput("<span style='color:#FF0000;'>[경고]</span> 서버가 알 수 없는 패킷을 보냈습니다. \""+e.data+"\"");
@@ -83,14 +85,20 @@
 
 	function send(x){ 
 		if(status == "false") return;
-		regPacket = /^\/(.*)/g;
+		regPacket = /^\/(.*)\s?(.*)/g;
 		regMatch = regPacket.exec(x.trim());	
 
 		if(regMatch !== null){
 			regText = regMatch[1];
 
-			if(regText == "clear"){
+			if(regText == "clear") {
 				$("#output")[0].innerHTML = "";
+			} else if(regText == "nick") {
+				if(regMatch[2] != null) {
+					wSocket.send("NICK " + regMatch[2]);
+				} else {
+					addOutput("닉네임 변경: /nick <닉네임>");
+				}
 			} else {
 				addOutput("알 수 없는 명령어입니다.");
 			}
