@@ -35,6 +35,9 @@
 	function openChat(address) {
 		if(wSocket == undefined) {
 			wSocket = new WebSocket("ws://" + address);
+		} else {
+			wSocket.close();
+			wSocket = new WebSocket("ws://" + address);
 		}
 		wSocket.onmessage = function(e){ 
 
