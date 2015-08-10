@@ -196,10 +196,14 @@
 	}
 
 	function goChat(address) {
-		$("#nickname").attr("disabled", true);
-		$("#btn-connect").attr("disabled", true);
-		$("#alert").html("<div class='alert alert-info' role='alert'><span class='glyphicon glyphicon-time' aria-hidden='true'></span><span class='sr-only'>정보:</span> 서버에 연결중입니다...</div>");
-		openChat(address);
+		if($("#nickname").val() == "") { 
+			$("#alert").html("<div class='alert alert-danger' role='alert'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span><span class='sr-only'>오류:</span> 닉네임을 입력해주세요</div>");
+		} else {
+			$("#nickname").attr("disabled", true);
+			$("#btn-connect").attr("disabled", true);
+			$("#alert").html("<div class='alert alert-info' role='alert'><span class='glyphicon glyphicon-time' aria-hidden='true'></span><span class='sr-only'>정보:</span> 서버에 연결중입니다...</div>");
+			openChat(address);
+		}
 	}
 	$(function(){
 		$("#btn-connect").click(function() {
