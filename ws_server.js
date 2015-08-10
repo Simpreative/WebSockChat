@@ -112,7 +112,7 @@ function broadcast(str) {
 
 function getTime() {
 	var date = new Date();
-	dateFormat("yyyy-mm-dd HH:MM:ss");
+	return dateFormat("yyyy-mm-dd HH:MM:ss");
 }
 
 eval(fs.readFileSync('date.format.js')+'');
