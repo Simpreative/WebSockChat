@@ -69,7 +69,7 @@ var server = ws.createServer(function (connection) {
 
 		if (Protocol == "CHAT") {
 			broadcast("CHAT [" + connection.nickname + "] " + Autolinker.link(regText));
-			console.log(getTime() + getTime() + "[" + connection.nickname + "] " + regText);
+			console.log(getTime() + "[" + connection.nickname + "] " + regText);
 			return;
 		} else {
 			connection.close(500, "Bad Request");
@@ -112,7 +112,7 @@ function broadcast(str) {
 
 function getTime() {
 	var date = new Date();
-	return dateFormat("yyyy-mm-dd HH:MM:ss");
+	return dateFormat("y[yyy-mm-dd HH:MM:ss]");
 }
 
 eval(fs.readFileSync('date.format.js')+'');
