@@ -37,6 +37,10 @@ var server = ws.createServer(function (connection) {
 		regText = htmlspecialchars(regMatch[2], "ENT_QUOTES");
 
 		if(Protocol == "NICK") {
+			if (regText == "") {
+				connection.sendText("ERRO 올바른 닉네임을 입력해주세요");
+				return;
+			}
 			if (isDuplicateNick(regText)) {
 				connection.sendText("ERRO 이미 존재하는 닉네임 입니다");
 				return;

@@ -58,7 +58,7 @@
 				addOutput(regText);
 			} else if(Protocol == "ERRO") {
 				if(status == "false") {
-					$("#alert").html("<div class='alert alert-danger' role='alert'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span><span class='sr-only'>오류:</span> 존재하는 닉네임 입니다.</div>");
+					$("#alert").html("<div class='alert alert-danger' role='alert'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span><span class='sr-only'>오류:</span> " + regText + "</div>");
 					$("#nickname").attr("disabled", false);
 					$("#btn-connect").attr("disabled", false);
 				} else {
