@@ -49,11 +49,13 @@ var server = ws.createServer(function (connection) {
 					connection.nickname = regText;
 					connection.sendText("HELO");
 					broadcast("CHAT <span style='color: #CE5C00;'>" + regText + " 님이 입장하셨습니다</span>");
+					console.log(getTime() + regText + " connected");
 					return;
 				} else {
 					var oldNick = connection.nickname;
 					connection.nickname = regText;
 					broadcast("CHAT <span style='color: #CE5C00;'>" + oldNick + " 님이 닉네임을 " + regText + "로 변경하셨습니다");
+					console.log(getTime() + oldNick + " changed to " + regText);
 					return;
 				}
 			}
@@ -66,6 +68,7 @@ var server = ws.createServer(function (connection) {
 
 		if (Protocol == "CHAT") {
 			broadcast("CHAT [" + connection.nickname + "] " + Autolinker.link(regText));
+			console.log(getTime() + getTime() + "[" + connection.nickname + "] " + regText);
 			return;
 		} else {
 			connection.close(500, "Bad Request");
@@ -76,11 +79,12 @@ var server = ws.createServer(function (connection) {
 	connection.on("close", function (code, reason) {
 		if (connection.nickname !== null) {
 			broadcast("CHAT <span style='color: #C4A000;'>" + connection.nickname + " 님이 퇴장하셨습니다 (" + reason + ")</span>");
+			console.log(getTime() + connection.nickname + " disconnected (" + reason + ")");
 		}
 	});
 
 	connection.on("error", function (e) {
-		console.log("An error occurred: " + e);
+		console.log(getTime() + "An error occurred: " + e);
 		if(connection.nickname !== null) {
 			broadcast("CHAT <span style='color: #C4A000;'>" + connection.nickname + " 님이 퇴장하셨습니다 (" + e + ")</span>");
 		}
